@@ -1,3 +1,31 @@
-<ui-view name="header"></ui-view>
+<section layout="column">
 
-<ui-view></ui-view>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <md-button hide-gt-md class="md-icon-button" aria-label="Settings" ng-click="vm.toogleMenu()">
+        <ng-md-icon icon="menu" size="28"></ng-md-icon>
+      </md-button>
+      <h2>
+        <span>title</span>
+      </h2>
+    </div>
+  </md-toolbar>
+
+  <section layout="row" flex>
+
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+      <md-toolbar class="md-theme-indigo" hide-gt-md>
+        <h1 class="md-toolbar-tools">Sidenav Left</h1>
+      </md-toolbar>
+      <md-content layout-padding>
+        menu
+      </md-content>
+    </md-sidenav>
+
+    <md-content flex layout-padding>
+      <ui-view></ui-view>
+    </md-content>
+
+  </section>
+
+</section>

@@ -3,7 +3,8 @@ var webpack = require('webpack');
 module.exports = {
   context: __dirname + '/app',
   entry: {
-    auth: './components/auth/index.js',
+    guest: './components/guest/index.js',
+    public: './components/public/index.js',
     common: './index.js'
   },
   output: {
