@@ -1,16 +1,25 @@
 export default ngModule => {
   ngModule.controller('CommonCtrl', [
-    '$mdSidenav', '$window', '$state',
-    function ($mdSidenav, $window, $state) {
-      this.toogleMenu = function () {
-        $mdSidenav('left').toggle();
-      };
+    '$mdSidenav', '$window', '$state', 'AuthTokenFactory',
+    function ($mdSidenav, $window, $state, authTokenFactory) {
 
-      this.styles = {
+      var vm = this;
+      vm.$state = $state;
+      vm.logout = logout;
+      vm.toogleMenu = toogleMenu;
+      vm.styles = {
         height: ($window.innerHeight - 64) + 'px'
       };
 
-      this.$state = $state;
+      function toogleMenu() {
+        $mdSidenav('left').toggle();
+      }
+
+      function logout() {
+        toogleMenu();
+        authTokenFactory.setToken();
+        $state.go('jse.guest.login');
+      }
     }
   ]);
 };

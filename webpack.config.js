@@ -5,6 +5,7 @@ module.exports = {
   entry: {
     guest: './components/guest/index.js',
     public: './components/public/index.js',
+    private: './components/private/index.js',
     common: './index.js'
   },
   output: {

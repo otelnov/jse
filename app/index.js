@@ -30,6 +30,13 @@ ngModule.config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', '
         abstract: true,
         template: '<ui-view></ui-view>',
         resolve: {
+          checkAuth: function (CommonFactory, $state) {
+            CommonFactory.currentUser().then(function (user) {
+              if (user) {
+                return $state.go('jse.private.dashboard');
+              }
+            });
+          },
           lazy: function ($ocLazyLoad) {
             return $ocLazyLoad.load('./guest.js');
           }
@@ -44,9 +51,23 @@ ngModule.config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', '
           }
         }
       })
+      .state('jse.private', {
+        abstract: true,
+        template: '<ui-view></ui-view>',
+        resolve: {
+          checkAuth: function (CommonFactory, $state) {
+            CommonFactory.currentUser().then(angular.noop, function () {
+              return $state.go('jse.guest.login');
+            });
+          },
+          lazy: function ($ocLazyLoad) {
+            return $ocLazyLoad.load('./private.js');
+          }
+        }
+      })
 
       .state('jse.guest.login', {
-        url: '/',
+        url: '/login',
         template: require('./components/guest/login.html'),
         controller: 'LoginCtrl',
         controllerAs: 'vm'
@@ -55,6 +76,13 @@ ngModule.config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', '
         url: '/register',
         template: require('./components/guest/register.html'),
         controller: 'RegisterCtrl',
+        controllerAs: 'vm'
+      })
+
+      .state('jse.private.dashboard', {
+        url: '/',
+        template: 'dash',
+        controller: 'DashboardCtrl',
         controllerAs: 'vm'
       })
 

@@ -1,15 +1,19 @@
 export default ngModule => {
   ngModule.controller('RegisterCtrl', [
-    'AuthFactory',
-    function (authFactory) {
+    'AuthFactory', '$state',
+    function (authFactory, $state) {
       var vm = this;
 
       vm.model = {};
       vm.register = register;
 
       function register() {
-        authFactory.register(vm.model).then(function (res) {
-          console.log(res);
+        authFactory.register(vm.model, function (err) {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          $state.go('jse.private.dashboard');
         });
       }
     }

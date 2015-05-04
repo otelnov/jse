@@ -21,7 +21,7 @@
         <md-item class="ng-scope" role="listitem">
           <button class="md-button md-default-theme" ng-click="vm.toogleMenu()" ui-sref="jse.guest.login"
                   ng-class="{'selected' : vm.$state.current.name === 'jse.guest.login' }">
-            <ng-md-icon icon="exit_to_app" size="56"></ng-md-icon>
+            <ng-md-icon icon="vpn_key" size="56"></ng-md-icon>
               <span class="ng-binding ng-scope">
                 Sign in
               </span>
@@ -44,6 +44,15 @@
             <ng-md-icon icon="info_outline" size="56"></ng-md-icon>
               <span class="ng-binding ng-scope">
                 About
+              </span>
+          </button>
+        </md-item>
+
+        <md-item class="ng-scope" role="listitem">
+          <button class="md-button md-default-theme" ng-click="vm.logout()">
+            <ng-md-icon icon="exit_to_app" size="56"></ng-md-icon>
+              <span class="ng-binding ng-scope">
+                Logout
               </span>
           </button>
         </md-item>

@@ -3,19 +3,23 @@ export default ngModule => {
     '$q', 'API_URL', '$http', 'AuthTokenFactory',
     function ($q, API_URL, $http, AuthTokenFactory) {
 
-      function register(model) {
-        return $http.post(API_URL + '/users/register', model)
+      function register(model, cb) {
+        $http.post(API_URL + '/users/register', model)
           .then(function (response) {
             AuthTokenFactory.setToken(response.data.token);
-            return response;
+            cb(false, response);
+          }, function (err) {
+            cb(err);
           });
       }
 
-      function login(model) {
-        return $http.post(API_URL + '/users/login', model)
+      function login(model, cb) {
+        $http.post(API_URL + '/users/login', model)
           .then(function (response) {
             AuthTokenFactory.setToken(response.data.token);
-            return response;
+            cb(false, response);
+          }, function (err) {
+            cb(err);
           });
       }
 
