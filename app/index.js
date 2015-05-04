@@ -9,11 +9,13 @@ require('oclazyload');
 let ngModule = angular.module('jse', ['ui.router', 'oc.lazyLoad', 'ngMaterial', 'ngMdIcons']);
 require('./components/common')(ngModule);
 
-ngModule.config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider',
-  ($stateProvider, $urlRouterProvider, $mdThemingProvider) => {
+ngModule.config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', '$httpProvider',
+  ($stateProvider, $urlRouterProvider, $mdThemingProvider, $httpProvider) => {
 
     //$locationProvider.html5Mode(true);
     //$locationProvider.hashPrefix('!');
+
+    $httpProvider.interceptors.push('AuthInterceptor');
 
     $urlRouterProvider.otherwise('/');
 
@@ -49,6 +51,12 @@ ngModule.config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider',
         controller: 'LoginCtrl',
         controllerAs: 'vm'
       })
+      .state('jse.guest.register', {
+        url: '/register',
+        template: require('./components/guest/register.html'),
+        controller: 'RegisterCtrl',
+        controllerAs: 'vm'
+      })
 
       .state('jse.public.about', {
         url: '/about',
@@ -65,7 +73,46 @@ ngModule.config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider',
 
     $mdThemingProvider.theme('default')
       //.dark()
-      .primaryPalette('blue-grey')
+      .primaryPalette('cyan')
       .accentPalette('red');
   }
 ]);
+
+ngModule.factory('AuthTokenFactory', function AuthTokenFactory($window) {
+  var store = $window.localStorage;
+  var key = 'auth-token';
+
+  return {
+    getToken: getToken,
+    setToken: setToken
+  };
+
+  function getToken() {
+    return store.getItem(key);
+  }
+
+  function setToken(token) {
+    if (token) {
+      store.setItem(key, token);
+    } else {
+      store.removeItem(key);
+    }
+  }
+});
+
+ngModule.factory('AuthInterceptor', function AuthInterceptor(AuthTokenFactory) {
+  return {
+    request: addToken
+  };
+
+  function addToken(config) {
+    var token = AuthTokenFactory.getToken();
+    if (token) {
+      config.headers = config.headers || {};
+      config.headers.Authorization = 'Bearer ' + token;
+    }
+    return config;
+  }
+});
+
+ngModule.constant('API_URL', 'http://localhost:3000');

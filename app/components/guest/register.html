@@ -1,8 +1,9 @@
-<form ng-submit="vm.login()">
+<form ng-submit="vm.register()">
 
   <input type="text" required placeholder="Username" ng-model="vm.model.username"/>
+  <input type="email" required placeholder="Email" ng-model="vm.model.email"/>
   <input type="password" required placeholder="Password" ng-model="vm.model.password"/>
 
-  <input type="submit" value="Sign In"/>
+  <input type="submit" value="Sign Up"/>
 
 </form>

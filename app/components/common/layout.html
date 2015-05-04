@@ -5,21 +5,49 @@
       <md-button hide-gt-md class="md-icon-button" aria-label="Settings" ng-click="vm.toogleMenu()">
         <ng-md-icon icon="menu" size="28"></ng-md-icon>
       </md-button>
-      <h2>
+      <h1>
         <span>title</span>
-      </h2>
+      </h1>
     </div>
   </md-toolbar>
 
-  <section layout="row" flex>
+  <section layout="row" flex ng-style="vm.styles">
 
     <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
       <md-toolbar class="md-theme-indigo" hide-gt-md>
         <h1 class="md-toolbar-tools">Sidenav Left</h1>
       </md-toolbar>
-      <md-content layout-padding>
-        menu
-      </md-content>
+      <md-list>
+        <md-item class="ng-scope" role="listitem">
+          <button class="md-button md-default-theme" ng-click="vm.toogleMenu()" ui-sref="jse.guest.login"
+                  ng-class="{'selected' : vm.$state.current.name === 'jse.guest.login' }">
+            <ng-md-icon icon="exit_to_app" size="56"></ng-md-icon>
+              <span class="ng-binding ng-scope">
+                Sign in
+              </span>
+          </button>
+        </md-item>
+
+        <md-item class="ng-scope" role="listitem">
+          <button class="md-button md-default-theme" ng-click="vm.toogleMenu()" ui-sref="jse.guest.register"
+                  ng-class="{'selected' : vm.$state.current.name === 'jse.guest.register' }">
+            <ng-md-icon icon="person_add" size="56"></ng-md-icon>
+              <span class="ng-binding ng-scope">
+                Sign up
+              </span>
+          </button>
+        </md-item>
+
+        <md-item class="ng-scope" role="listitem">
+          <button class="md-button md-default-theme" ng-click="vm.toogleMenu()" ui-sref="jse.public.about"
+                  ng-class="{'selected' : vm.$state.current.name === 'jse.public.about' }">
+            <ng-md-icon icon="info_outline" size="56"></ng-md-icon>
+              <span class="ng-binding ng-scope">
+                About
+              </span>
+          </button>
+        </md-item>
+      </md-list>
     </md-sidenav>
 
     <md-content flex layout-padding>
