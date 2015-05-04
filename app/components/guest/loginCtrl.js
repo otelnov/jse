@@ -13,7 +13,7 @@ export default ngModule => {
             console.log(err);
             return;
           }
-          $state.go('jse.private.dashboard');
+          $state.go('jse.private.dashboard', null, {reload: true});
         });
       }
     }

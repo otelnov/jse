@@ -18,7 +18,7 @@
         <h1 class="md-toolbar-tools">Sidenav Left</h1>
       </md-toolbar>
       <md-list>
-        <md-item class="ng-scope" role="listitem">
+        <md-item ng-hide="vm.loggedIn" class="ng-scope" role="listitem">
           <button class="md-button md-default-theme" ng-click="vm.toogleMenu()" ui-sref="jse.guest.login"
                   ng-class="{'selected' : vm.$state.current.name === 'jse.guest.login' }">
             <ng-md-icon icon="vpn_key" size="56"></ng-md-icon>
@@ -28,7 +28,7 @@
           </button>
         </md-item>
 
-        <md-item class="ng-scope" role="listitem">
+        <md-item ng-hide="vm.loggedIn" class="ng-scope" role="listitem">
           <button class="md-button md-default-theme" ng-click="vm.toogleMenu()" ui-sref="jse.guest.register"
                   ng-class="{'selected' : vm.$state.current.name === 'jse.guest.register' }">
             <ng-md-icon icon="person_add" size="56"></ng-md-icon>
@@ -48,7 +48,7 @@
           </button>
         </md-item>
 
-        <md-item class="ng-scope" role="listitem">
+        <md-item ng-show="vm.loggedIn" class="ng-scope" role="listitem">
           <button class="md-button md-default-theme" ng-click="vm.logout()">
             <ng-md-icon icon="exit_to_app" size="56"></ng-md-icon>
               <span class="ng-binding ng-scope">

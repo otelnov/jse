@@ -1,9 +1,15 @@
 export default ngModule => {
   ngModule.controller('CommonCtrl', [
-    '$mdSidenav', '$window', '$state', 'AuthTokenFactory',
-    function ($mdSidenav, $window, $state, authTokenFactory) {
-
+    '$mdSidenav', '$window', '$state', 'AuthTokenFactory', 'CommonFactory',
+    function ($mdSidenav, $window, $state, authTokenFactory, commonFactory) {
       var vm = this;
+
+      commonFactory.currentUser().then(function () {
+        vm.loggedIn = true;
+      }, function () {
+        vm.loggedIn = false;
+      });
+
       vm.$state = $state;
       vm.logout = logout;
       vm.toogleMenu = toogleMenu;
@@ -17,6 +23,7 @@ export default ngModule => {
 
       function logout() {
         toogleMenu();
+        vm.loggedIn = false;
         authTokenFactory.setToken();
         $state.go('jse.guest.login');
       }
